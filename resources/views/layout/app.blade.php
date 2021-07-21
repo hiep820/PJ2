@@ -31,14 +31,18 @@
 
 <div class="wrapper">
     {{--sidebar--}}
-    @include('layout.sidebar');
+    @include('layout.sidebar')
      {{--endsidebar--}}
     <div class="main-panel">
-		@include('layout.navbar');
+		@include('layout.navbar')
         {{-- content--}}
+        <div class="main-content">
+            <div class="container-fluid">
         @yield('content')
+            </div>
+        </div>
         {{-- end-content--}}
-        @include('layout.footer');
+        @include('layout.footer')
 
     </div>
 </div>
@@ -99,23 +103,5 @@
 
 	<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
 	<script src="{{ asset('assets') }}/js/demo.js"></script>
-
-	<script type="text/javascript">
-    	$(document).ready(function(){
-
-        	demo.initDashboardPageCharts();
-        	demo.initVectorMap();
-
-        	$.notify({
-            	icon: 'pe-7s-bell',
-            	message: "<b>Light Bootstrap Dashboard PRO</b> - forget about boring dashboards."
-
-            },{
-                type: 'warning',
-                timer: 4000
-            });
-
-    	});
-	</script>
 
 </html>

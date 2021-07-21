@@ -26,15 +26,45 @@
                 </a>
             </li>
             <li>
-                <a href="charts.html">
-                    <i class="pe-7s-graph1"></i>
-                    <p>Quản gáo vụ </p>
+                <a href="calendar.html">
+                    <i class="pe-7s-user-female"></i>
+                    <p>Quản lý giáo vụ</p>
                 </a>
             </li>
             <li>
                 <a href="calendar.html">
-                    <i class="pe-7s-date"></i>
+                    <i class="pe-7s-users"></i>
+                    <p>quản lý Khóa học</p>
+                </a>
+            </li>
+            <li>
+                <a href="calendar.html">
+                    <i class="pe-7s-like"></i>
+                    <p>Quản lý lớp học</p>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('student.index')}}">
+                    <i class="pe-7s-id"></i>
                     <p>quản lý học sinh</p>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('subjects.index')}}">
+                    <i class="pe-7s-notebook"></i>
+                    <p>Quản lý môn học</p>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('book.index')}}">
+                    <i class="pe-7s-bookmarks"></i>
+                    <p>quản lý sách</p>
+                </a>
+            </li>
+            <li>
+                <a href="calendar.html">
+                    <i class="pe-7s-diskette"></i>
+                    <p>quản lý phiếu thu</p>
                 </a>
             </li>
         </ul>

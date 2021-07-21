@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class subjects extends Model
 {
-    use HasFactory;
+    protected $table = 'subjects';
+    public $timestamps = false;
+    public $primaryKey = 'id_subjects';
 }

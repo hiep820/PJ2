@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
+use App\Models\subjects;
 use Illuminate\Http\Request;
 
 class SubjectsController extends Controller
@@ -11,9 +13,17 @@ class SubjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->get('search');
+        $listSubject = subjects::join("grade", "subjects.id_grade", "=", "grade.id_grade")
+        ->where("student.su_ly", 1)
+        ->where("name_subjects", "like", "%$search%")
+        ->paginate(5);
+        return view('subjects.index', [
+            'listSubject' => $listSubject,
+            'search' => $search,
+        ]);
     }
 
     /**
@@ -23,7 +33,12 @@ class SubjectsController extends Controller
      */
     public function create()
     {
-        //
+        $listSubject = subjects:: all();
+        $listGrade = Grade::all();
+        return view('subjects.create',[
+            "listSubject" => $listSubject,
+            "listGrade" => $listGrade,
+        ]);
     }
 
     /**
@@ -34,7 +49,13 @@ class SubjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->get('name');
+        $grade = $request->get('grade');
+        $Subjects = new subjects();
+        $Subjects->name_subjects = $name;
+        $Subjects->id_grade = $grade;
+        $Subjects->save();
+        return redirect(route('subjects.index'));
     }
 
     /**
@@ -56,7 +77,13 @@ class SubjectsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $listSubject = subjects::join("grade", "subjects.id_grade", "=", "grade.id_grade")
+        ->find($id);
+        $listGrade = Grade::all();
+        return view('subjects.edit', [
+            "listSubject" => $listSubject,
+            "listGrade" => $listGrade
+        ]);
     }
 
     /**
@@ -68,7 +95,13 @@ class SubjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $names = $request->get('names');
+        $grade = $request->get('grade');
+        $Subjects= subjects::find($id);
+        $Subjects->name_subjects = $names;
+        $Subjects->id_grade = $grade;
+        $Subjects->save();
+        return redirect()->route('subjects.index');
     }
 
     /**
@@ -79,6 +112,7 @@ class SubjectsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        subjects::where('id_subjects', $id)->delete();
+        return redirect(route('subjects.index'));
     }
 }

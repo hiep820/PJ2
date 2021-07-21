@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\subjects;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -11,9 +13,16 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->get('search');
+        $listBook = Book::join("subjects", "book.id_subjects", "=", "subjects.id_subjects")
+        ->where("title_book", "like", "%$search%")
+        ->paginate(5);
+        return view('book.index', [
+            'listBook' => $listBook,
+            'search' => $search,
+        ]);
     }
 
     /**
@@ -23,7 +32,12 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        $listBook = Book:: all();
+        $listSubject= Subjects::all();
+        return view('book.create',[
+            "listBook" => $listBook,
+            "listSubject" => $listSubject,
+        ]);
     }
 
     /**
@@ -34,7 +48,15 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->get('title');
+        $soluong = $request->get('so_luong');
+        $mon = $request->get('mon');
+        $book = new Book();
+        $book->title_book = $name;
+        $book->quantity = $soluong;
+        $book->id_subjects=$mon;
+        $book->save();
+        return redirect(route('book.index'));
     }
 
     /**
@@ -45,7 +67,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::find($id);
+        return $book;
     }
 
     /**
@@ -56,7 +79,13 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $listBook = Book::join("subjects", "book.id_subjects", "=", "subjects.id_subjects")
+        ->find($id);
+        $listSubject = Subjects::all();
+        return view('book.edit', [
+            "listBook" => $listBook,
+            "listSubject" => $listSubject
+        ]);
     }
 
     /**
@@ -68,7 +97,18 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $name = $request->get('title_book');
+        $soluong = $request->get('so_luong');
+        $mon = $request->get('mon');
+        $trang_thai= $request->get('trang_thai');
+        $book = Book::find($id);
+        $book->title_book= $name;
+        $book->quantity = $soluong;
+        $book->id_subjects=$mon;
+        $book->available= $trang_thai;
+        $book->save();
+        return redirect()->route('book.index');
+
     }
 
     /**
@@ -79,6 +119,11 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Book::where('id_book', $id)->delete();
+        return redirect(route('book.index'));
+    }
+    public function hide($id)
+    {
+        echo $id;
     }
 }
