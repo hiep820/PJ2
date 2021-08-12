@@ -15,7 +15,7 @@ class CourseController extends Controller
     public function index(request $request)
     {
         $search = $request->get('search');
-        $listCourses = Course::where("title_book", "like", "%$search%")
+        $listCourses = Course::where("name_course", "like", "%$search%")
         ->paginate(5);
         return view('course.index', [
             'listCourses' => $listCourses,
@@ -71,7 +71,7 @@ class CourseController extends Controller
     public function edit($id)
     {
         $listCourses = Course::find($id);
-        return view('course.create',[
+        return view('course.edit',[
             'listCourses' => $listCourses
         ]);
     }

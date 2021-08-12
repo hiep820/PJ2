@@ -8,7 +8,7 @@
         Tên: <input type="text" name="title_book" value="{{ $listBook->title_book }}">
         Số lượng: <input type="text" name="so_luong" value="{{ $listBook->quantity }}"><br><br>
 
-        <input type="text" name="trang_thai" value="{{ $listBook->available}}">
+
         <select name="mon">
             @foreach ($listSubject as $item)
                 <option value="{{ $item->id_subjects }}" @if ($item->id_subjects = $listBook->id_subjects)

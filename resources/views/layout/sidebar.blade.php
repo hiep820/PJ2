@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li>
-                <a href="calendar.html">
+                <a href="{{route('course.index')}}">
                     <i class="pe-7s-users"></i>
                     <p>quản lý Khóa học</p>
                 </a>
@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li>
-                <a href="calendar.html">
+                <a href="{{ route('invoice.index')}}">
                     <i class="pe-7s-diskette"></i>
                     <p>quản lý phiếu thu</p>
                 </a>

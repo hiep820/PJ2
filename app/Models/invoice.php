@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class invoice extends Model
 {
     use HasFactory;
+    protected $table = 'invoice';
+
+    public $timestamps = false;
+
+    public $primaryKey = 'id_invoice';
 }

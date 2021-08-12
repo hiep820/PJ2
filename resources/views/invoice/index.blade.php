@@ -2,7 +2,7 @@
 @section('content')
 <div class="card">
     <div class="header">
-        <h4 class="title">Quản lý sách</h4>
+        <h4 class="title">Quản lý phiếu thu</h4>
     </div>
     <div class="content table-responsive table-full-width">
 <!DOCTYPE html>
@@ -14,42 +14,36 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="{{ route('book.create') }}">Thêm sách</a><br><br>
-    <form action="">
+    <div class="col-md-4">
+        <form action="">
         Tìm kiếm
         <input type="text" value="{{$search}}" name="search">
         <button>ok</button>
     </form>
+</div><br><br><br>
+<h5><a href="{{ route('invoice.create') }}">Tạo hóa đơn</a></h5><br><br>
     <table id="bootstrap-table" class="table">
         <thead>
-            <th>Mã</th>
-            <th>Tiêu đề</th>
-            <th>Môn</th>
-            <th>Số lượng tổng</th>
-            <th>Số sách đã phát</th>
-            <th>Số sách còn lại</th>
+            <th>Mã hóa đơn</th>
+            <th>Lớp học</th>
+            <th>Tiêu đề sách</th>
+            <th>Số lượng</th>
+            <th>Ngày xuất</th>
             <th></th>
             <th></th>
         </thead>
-        @foreach ($listBook as $item)
+        @foreach ($listInvoice as $item)
         <tbody>
         <tr>
-            <td>{{$item->id_book }}</td>
-            <td>{{$item->title_book }}</td>
-            <td>{{$item->name_subjects}}</td>
-            <td>{{$item->quantity}}</td>
-            <td>
-                @php
-                    $sum =\App\Models\invoice::where('id_book','=',$item->id_book)
-                    ->sum('invoice.quantitys');
-                @endphp
-                {{ $sum}}
-            </td>
-            <td>{{ $item->quantity - $sum}}</td>
+            <td>{{$item->id_invoice}}</td>
+            <td>{{$item->name_grade}}</td>
+            <td>{{$item->title_book}}</td>
+            <td>{{$item->quantitys}}</td>
+            <td>{{$item->exportDate}}</td>
             <td><a class="btn btn-sm btn-warning"
-                href="{{ route('book.edit', $item->id_book) }}">Sửa</a></td>
+                href="{{ route('invoice.edit', $item->id_invoice) }}">Sửa</a></td>
             <td>
-                <form action="{{ route('book.destroy', $item->id_book) }}" method="post">
+                <form action="{{ route('invoice.destroy', $item->id_invoice) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-sm btn-danger">Xóa</button>
@@ -59,7 +53,7 @@
         </tbody>
         @endforeach
     </table>
-    {{$listBook->appends([
+    {{$listInvoice->appends([
         'search'=>$search,
     ])->links()}}
 </body>

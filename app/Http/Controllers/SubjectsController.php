@@ -17,7 +17,6 @@ class SubjectsController extends Controller
     {
         $search = $request->get('search');
         $listSubject = subjects::join("grade", "subjects.id_grade", "=", "grade.id_grade")
-        ->where("student.su_ly", 1)
         ->where("name_subjects", "like", "%$search%")
         ->paginate(5);
         return view('subjects.index', [

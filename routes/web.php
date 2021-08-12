@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectsController;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +29,5 @@ Route::prefix("student")->name('student.')->group(function () {
     Route::resource("/", StudentController::class);
     Route::get('hide/{id}', [StudentController::class, 'hide'])->name('hide');
 });
+Route::resource("course", CourseController::class);
+Route::resource("invoice", InvoiceController::class);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\invoice;
 use App\Models\subjects;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,14 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $listInvoice = invoice::join("grade", "invoice.id_grade", "=", "grade.id_grade")
+        ->join("book","invoice.id_book","=","book.id_book")->get();
         $listBook = Book::join("subjects", "book.id_subjects", "=", "subjects.id_subjects")
         ->where("title_book", "like", "%$search%")
         ->paginate(5);
         return view('book.index', [
             'listBook' => $listBook,
+            'listInvoice'=>$listInvoice,
             'search' => $search,
         ]);
     }
@@ -100,12 +104,10 @@ class BookController extends Controller
         $name = $request->get('title_book');
         $soluong = $request->get('so_luong');
         $mon = $request->get('mon');
-        $trang_thai= $request->get('trang_thai');
         $book = Book::find($id);
         $book->title_book= $name;
         $book->quantity = $soluong;
         $book->id_subjects=$mon;
-        $book->available= $trang_thai;
         $book->save();
         return redirect()->route('book.index');
 
